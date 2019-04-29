@@ -5,29 +5,24 @@ class App extends Component {
 
   state = {
     persons: [
-      {name: 'Vic', age:25},
-      {name: 'Romi', age:31},
-      {name: 'David', age: 27}
+      {id: 'asdfd_1', name: 'Vic', age:25},
+      {id: 'asdfd_2', name: 'Romi', age:31},
+      {id: 'asdfd_3', name: 'David', age: 27}
     ]
   }
 
-  switchNameHandler = (newName) =>{
-
-    this.setState({
-      persons: [
-      {name: newName, age:25},
-      {name: 'Romi', age:31},
-      {name: 'David', age: 79}
-    ]
-    })
+  deletePersonHandler = (personsIndex) => {
+    const persons = [...this.state.persons];
+    persons.splice(personsIndex, 1);
+    this.setState({persons:persons})
   }
 
   nameChangeHandler = (event) =>{
     this.setState({
       persons: [
-        {name: 'Vic', age:25},
-        {name: event.target.value, age:31},
-        {name: 'David', age: 27}
+        {id: 'asdfd_1', name: 'Vic', age:25},
+        {id: 'asdfd_2', name: event.target.value, age:31},
+        {id: 'asdfd_3', name: 'David', age: 27}
     ],
     showPersons: false
     })
@@ -49,6 +44,22 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null;
+
+    if (this.state.showPersons){
+      persons = (
+      <div>
+        {this.state.persons.map((person,index) => {
+          return <Person
+            click={() => this.deletePersonHandler(index)}
+            name={person.name}
+            age={person.age}
+            key={person.id} />
+        })}
+      </div>
+          )
+    }
+
 
     return (
       <div className="App">
@@ -60,23 +71,7 @@ class App extends Component {
           style ={style}
           onClick={this.togglePersonsHandler}>Click Me</button>
 
-          { this.state.showPersons ?
-          <div>
-            <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}/>
-
-            <Person 
-            click={this.switchNameHandler.bind(this, 'VNWK')}
-            changed={this.nameChangeHandler}
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}>My Hobbies: Fighting, Watching Movies</Person>
-
-            < Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age} />
-          </div>
-          : null}
+          {persons}
         </header>
       </div>
     );
