@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Validation from './Validation/Validation';
+
 class App extends Component {
 
   state = {
@@ -8,7 +10,8 @@ class App extends Component {
       {id: 'asdfd_1', name: 'Vic', age:25},
       {id: 'asdfd_2', name: 'Romi', age:31},
       {id: 'asdfd_3', name: 'David', age: 27}
-    ]
+    ],
+    inputCount: null
   }
 
   deletePersonHandler = (personsIndex) => {
@@ -35,6 +38,12 @@ class App extends Component {
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
+  }
+  
+  countInputHandler = (event) => {
+    this.setState({
+      inputCount : event.target.value.length
+    });
   }
 
   render() {
@@ -75,8 +84,11 @@ class App extends Component {
           <button 
           style ={style}
           onClick={this.togglePersonsHandler}>Click Me</button>
-
+          <br/><input type="text" onChange={(event) => this.countInputHandler(event)}/>
+          <p>{this.state.inputCount}</p>
           {persons}
+
+          <Validation inLength={this.state.inputCount} />
         </header>
       </div>
     );
