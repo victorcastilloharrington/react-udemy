@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 import Validation from './Validation/Validation';
+import Char from './Char/Char';
 
 class App extends Component {
 
@@ -11,7 +12,8 @@ class App extends Component {
       {id: 'asdfd_2', name: 'Romi', age:31},
       {id: 'asdfd_3', name: 'David', age: 27}
     ],
-    inputCount: null
+    inputCount: null,
+    inputString: ''
   }
 
   deletePersonHandler = (personsIndex) => {
@@ -42,8 +44,20 @@ class App extends Component {
   
   countInputHandler = (event) => {
     this.setState({
-      inputCount : event.target.value.length
+      inputCount : event.target.value.length,
+      inputString: event.target.value
     });
+  }
+
+  deleteCharHandler = (charIndex) => {
+    
+    const charArray = [...this.state.inputString.split('')];
+    charArray.splice(charIndex, 1);
+    this.setState({
+      inputString: charArray.join(''),
+      inputCount: charArray.length
+    });
+    
   }
 
   render() {
@@ -58,6 +72,7 @@ class App extends Component {
     }
 
     let persons = null;
+    let chars = '';
 
     if (this.state.showPersons){
       persons = (
@@ -74,6 +89,18 @@ class App extends Component {
           )
     }
 
+    if(this.state.inputString !== ''){
+      let charArray = this.state.inputString.split('');
+
+      chars = (
+        <div>
+        {charArray.map((char, index) => {
+            return <Char aChar={char} key={index} click={(event) => this.deleteCharHandler(index) }/> 
+          })}
+        </div>
+      )
+    }
+
 
     return (
       <div className="App">
@@ -84,11 +111,12 @@ class App extends Component {
           <button 
           style ={style}
           onClick={this.togglePersonsHandler}>Click Me</button>
-          <br/><input type="text" onChange={(event) => this.countInputHandler(event)}/>
+          <br/><input type="text" onChange={(event) => this.countInputHandler(event)} value={this.state.inputString}/>
           <p>{this.state.inputCount}</p>
           {persons}
 
           <Validation inLength={this.state.inputCount} />
+          {chars}
         </header>
       </div>
     );

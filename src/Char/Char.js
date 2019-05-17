@@ -10,9 +10,7 @@ const styles = {
 
 const char = (props) => {
   return(
-    <div>
-      <p style={styles}>{props.aChar}</p>
-    </div>
+      <p style={styles} onClick={props.click}>{props.aChar}</p>
   )
 };
 
