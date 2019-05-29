@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person';
-import Validation from './Validation/Validation';
-import Char from './Char/Char';
 
 class App extends Component {
 
@@ -12,8 +11,6 @@ class App extends Component {
       {id: 'asdfd_2', name: 'Romi', age:31},
       {id: 'asdfd_3', name: 'David', age: 27}
     ],
-    inputCount: null,
-    inputString: ''
   }
 
   deletePersonHandler = (personsIndex) => {
@@ -41,38 +38,24 @@ class App extends Component {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
   }
-  
-  countInputHandler = (event) => {
-    this.setState({
-      inputCount : event.target.value.length,
-      inputString: event.target.value
-    });
-  }
 
-  deleteCharHandler = (charIndex) => {
     
-    const charArray = [...this.state.inputString.split('')];
-    charArray.splice(charIndex, 1);
-    this.setState({
-      inputString: charArray.join(''),
-      inputCount: charArray.length
-    });
-    
-  }
+  
 
   render() {
 
     const style = {
-      backgroundColor: '#fff',
+      backgroundColor: '#20cc55',
       font: 'inherit',
       border: '2px solid #5fb0ff',
       borderRadius: '5px',
       padding: '8px',
-      cursor: 'pointer'
-    }
+      cursor: 'pointer',
+      color: '#fff',
+      fontWeight: 'bold'
+    };
 
     let persons = null;
-    let chars = '';
 
     if (this.state.showPersons){
       persons = (
@@ -86,41 +69,37 @@ class App extends Component {
             changed={(event) => this.nameChangeHandler(event, person.id)} />
         })}
       </div>
-          )
+          );
+      
+          style.backgroundColor = 'rgb(228, 43, 43)';
     }
 
-    if(this.state.inputString !== ''){
-      let charArray = this.state.inputString.split('');
+    const classes = [];
 
-      chars = (
-        <div>
-        {charArray.map((char, index) => {
-            return <Char aChar={char} key={index} click={(event) => this.deleteCharHandler(index) }/> 
-          })}
-        </div>
-      )
+    if (this.state.persons.length <= 2){
+      classes.push('red');
     }
 
-
+    if (this.state.persons.length <= 1){
+      classes.push('bold');
+    }
+    console.log(classes);
     return (
       <div className="App">
         <header className="App-header">
           <h1>I'm a React App</h1>
-          <p>This is really working</p>
+          <p className={classes.join(' ')}>This is really working</p>
 
           <button 
           style ={style}
           onClick={this.togglePersonsHandler}>Click Me</button>
-          <br/><input type="text" onChange={(event) => this.countInputHandler(event)} value={this.state.inputString}/>
           <p>{this.state.inputCount}</p>
           {persons}
-
-          <Validation inLength={this.state.inputCount} />
-          {chars}
         </header>
       </div>
     );
   }
 }
 
-export default App;
+// export default App;
+export default Radium(App);
