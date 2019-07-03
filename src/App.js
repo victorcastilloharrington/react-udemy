@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import styles from './App.module.css';
 import './App.css';
-import Radium from 'radium';
+// import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -77,16 +78,15 @@ class App extends Component {
     const classes = [];
 
     if (this.state.persons.length <= 2){
-      classes.push('red');
+      classes.push(styles.red);
     }
 
     if (this.state.persons.length <= 1){
-      classes.push('bold');
+      classes.push(styles.bold);
     }
     console.log(classes);
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className={styles.App}>
           <h1>I'm a React App</h1>
           <p className={classes.join(' ')}>This is really working</p>
 
@@ -95,11 +95,10 @@ class App extends Component {
           onClick={this.togglePersonsHandler}>Click Me</button>
           <p>{this.state.inputCount}</p>
           {persons}
-        </header>
       </div>
     );
   }
 }
 
-// export default App;
-export default Radium(App);
+export default App;
+// export default Radium(App);
