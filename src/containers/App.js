@@ -40,9 +40,6 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   }
 
-    
-  
-
   render() {
     
     let persons = null;
