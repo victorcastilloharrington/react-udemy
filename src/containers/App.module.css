@@ -1,15 +1,7 @@
 .App {
   text-align: center;
 }
-
-.red {
-  color: #e60023;
-}
-
-.bold {
-  font-weight: bold;
-}
-
+/* 
 .App button{
   background: #0f9d58;
   border: none;
@@ -30,5 +22,5 @@
 
 .App button.red:hover {
   background: #fc183a;
-}
+} */
 
