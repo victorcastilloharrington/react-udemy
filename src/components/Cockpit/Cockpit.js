@@ -1,8 +1,19 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styles from './Cockpit.module.css';
 
 const Cockpit = (props) => {
-  let btnClass = null;
+
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect');
+    setTimeout(() => {
+      alert('Saved Data to Cloud');
+    }, 1000);
+    return () => {
+      console.log('[Cockpit.js] Cleanup work');
+    }
+  }, []);
+
+  let btnClass = null;  
 
   if(props.showPersons){
     btnClass = styles.red;
@@ -10,11 +21,11 @@ const Cockpit = (props) => {
 
   const classes = [];
 
-  if (props.personsLength <= 2) {
+  if (props.persons.length <= 2) {
     classes.push(styles.red);
   }
 
-  if (props.personsLength <= 1) {
+  if (props.persons.length <= 1) {
     classes.push(styles.bold);
   }
 

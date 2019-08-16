@@ -14,6 +14,29 @@ class App extends Component {
     ],
   }
 
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount');
+  // }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+  }
+
+
   deletePersonHandler = (personsIndex) => {
     const persons = [...this.state.persons];
     persons.splice(personsIndex, 1);
@@ -55,7 +78,7 @@ class App extends Component {
 
     return (
       <div className={styles.App}>
-          <Cockpit clicked={this.togglePersonsHandler} showPersons={this.state.showPersons} personsLength={this.state.persons.length} />
+          <Cockpit clicked={this.togglePersonsHandler} showPersons={this.state.showPersons} persons={this.state.persons} />
           {persons}
       </div>
     );
