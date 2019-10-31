@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from './Person.module.css';
 import withClass from '../../../hoc/WithClass';
+import AuthContext from '../../../context/auth-context';
 
 
 class Person extends Component {
@@ -10,13 +11,19 @@ class Person extends Component {
     this.inputElementRef = React.createRef();
   }
 
+  static contextType = AuthContext;
+
   componentDidMount(){
     this.inputElementRef.current.focus();
+    console.log(this.context.authenticated);
   }
 
   render(){
     return (
     <div className={styles.Person}>
+        <AuthContext.Consumer>
+          {(context) => context.authenticated ? <p>authenticated!</p> : <p>Please Log IN</p>}
+        </AuthContext.Consumer>
       <p onClick={this.props.click} >I'm {this.props.name} and I'm {this.props.age} years old!</p>
       <p>{this.props.children}</p>
       <input onChange={this.props.changed} 
