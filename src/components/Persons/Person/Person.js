@@ -21,9 +21,7 @@ class Person extends Component {
   render(){
     return (
     <div className={styles.Person}>
-        <AuthContext.Consumer>
-          {(context) => context.authenticated ? <p>authenticated!</p> : <p>Please Log IN</p>}
-        </AuthContext.Consumer>
+          {this.context.authenticated ? <p>authenticated!</p> : <p>Please Log IN</p>}
       <p onClick={this.props.click} >I'm {this.props.name} and I'm {this.props.age} years old!</p>
       <p>{this.props.children}</p>
       <input onChange={this.props.changed} 
